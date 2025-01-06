@@ -19,11 +19,13 @@
             <!-- Profile Section -->
             <div class="col-md-4">
                 <h2>Profile</h2>
-                <img src="{{ url_for('static', filename='profile_pics/' + user.profile_picture) }}" class="profile-img" alt="Profile Picture">
+                <!-- Display the profile picture -->
+                <img src="{{ url_for('static', filename='profile_pics/' + (user.profile_picture if user.profile_picture else 'default.jpg')) }}" class="profile-img" alt="Profile Picture">
                 <ul class="list-group">
                     <li class="list-group-item"><strong>Name:</strong> {{ user.first_name }}</li>
                     <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
                 </ul>
+                <a href="{{ url_for('views.edit_profile') }}" class="btn btn-primary mt-3">Edit Profile</a> <!-- Link to Edit Profile -->
             </div>
 
             <!-- Cart, Favorites, and Purchased Books Section -->

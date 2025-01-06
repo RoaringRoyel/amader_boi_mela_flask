@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for,request, flash
 from flask_login import login_required, current_user
 from .models import Cart, CartItem, Favorite, Sale, BookExchangeRequest
-
+import os
 views = Blueprint('views', __name__)
-
+from .models import User,db
 @views.route('/buyer_dashboard')
 @login_required
 def buyer_dashboard():
@@ -26,6 +26,41 @@ def buyer_dashboard():
                            purchased_books=purchased_books,
                            pending_requests=pending_requests)
 
+# Route for editing profile
+@views.route('/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    if request.method == 'POST':
+        # Get the form data
+        first_name = request.form.get('first_name')
+        email = request.form.get('email')
+        profile_picture = request.files.get('profile_picture')
+
+        # Update the user record
+        user = User.query.get(current_user.id)
+        user.first_name = first_name
+        user.email = email
+
+        if profile_picture:
+            # Create the profile_pics folder if it doesn't exist
+            profile_pics_folder = os.path.join('MyChef','static', 'profile_pics')
+            if not os.path.exists(profile_pics_folder):
+                os.makedirs(profile_pics_folder)  # Create the directory if it doesn't exist
+            
+            # Save the uploaded profile picture
+            profile_picture_path = os.path.join(profile_pics_folder, profile_picture.filename)
+            profile_picture.save(profile_picture_path)
+
+            # Update the user's profile picture field in the database
+            user.profile_picture = profile_picture.filename
+
+        # Commit changes to the database
+        db.session.commit()
+
+        flash('Profile updated successfully!', category='success')
+        return redirect(url_for('views.buyer_dashboard'))  # Redirect back to the dashboard
+
+    return render_template('edit_profile.html', user=current_user)
 
 # from flask import Blueprint, render_template, session
 # from flask_login import login_required, current_user
