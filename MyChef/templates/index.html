@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>My Chef| Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/core-img/favicon.ico') }}">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+        <img src="{{ url_for('static', filename='img/core-img/salad.png') }}" alt="">
+    </div>
+
+    <!-- Search Wrapper -->
+    <div class="search-wrapper">
+        <!-- Close Btn -->
+        <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#" method="post">
+                        <input type="search" name="search" placeholder="Type any keywords...">
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Top Header Area -->
+        <div class="top-header-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-between">
+                    <!-- Breaking News -->
+                    <div class="col-12 col-sm-6">
+                        <div class="breaking-news">
+                            <div id="breakingNewsTicker" class="ticker">
+                                <ul>
+                                    <li><a href="#">Hello World!</a></li>
+                                    <li><a href="#">Welcome to My Chef.</a></li>
+                                    <li><a href="#">Filled with deliciousness!</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="delicious-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                        <!-- Logo -->
+                        <a class="nav-brand" href="index.html">
+                            <img src="{{ url_for('static', filename='img/core-img/newl.png') }}" alt="" width="130" height="45">
+                        </a>
+                        <div class="add-recipe-btn">
+                            <a href="{{ url_for('views.recipes') }}" class="btn btn-primary">ALL Recipe</a>
+                        </div>
+                        <!-- Add Recipe Button -->
+                        <div class="add-recipe-btn">
+                            <a href="{{ url_for('views.add_recipe') }}" class="btn btn-primary">Add Recipe</a>
+                        </div>
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                               
+
+                                <!-- Newsletter Form -->
+                                <div class="search-btn">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </div>
+
+                                <!-- Login/Signup Button -->
+                                <div class="auth-btn">
+                                    <a href="{{ url_for('views.login') }}" class="btn btn-auth">Login/Signup</a>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- ##### Hero Area Start ##### -->
+<section class="hero-area">
+    <div class="hero-slides owl-carousel">
+        <!-- Single Hero Slide for Burger -->
+        <div class="single-hero-slide bg-img">
+            <img src="{{ url_for('static', filename='img/bg-img/bg1.jpg') }}" alt="Background Image" />
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">Delicious Homemade Burger</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">Our signature homemade burger crafted with fresh ingredients, juicy beef, and secret spices. Taste the deliciousness in every bite!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Hero Slide for Salad -->
+        <div class="single-hero-slide bg-img">
+            <img src="{{ url_for('static', filename='img/bg-img/bg6.jpg') }}" alt="Background Image" />
+        
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">Fresh Veggie Salad</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">A healthy and refreshing salad made with the freshest vegetables, topped with a light vinaigrette dressing. Perfect for any occasion!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single Hero Slide for Apple Juice -->
+        <div class="single-hero-slide bg-img">
+            <img src="{{ url_for('static', filename='img/bg-img/bg7.jpg') }}" alt="Background Image" />
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">Refreshing Apple Juice</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">Freshly squeezed apple juice with a natural sweetness. A perfect drink to quench your thirst and boost your energy!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Hero Area End ##### -->
+
+<!-- ##### Top Catagory Area Start ##### -->
+<section class="top-catagory-area section-padding-80-0">
+    <div class="container">
+        <div class="row">
+            <!-- Top Catagory Area -->
+            <div class="col-12 col-lg-6">
+                <div class="single-top-catagory">
+                    <img src="{{ url_for('static', filename='img/bg-img/bg2.jpg') }}" alt="">
+                    <!-- Content -->
+                    <div class="top-cta-content">
+                        <h3>Strawberry Cake</h3>
+                        <h6>Simple &amp; Delicious</h6>
+                        <a href="{{ url_for('views.recipes') }}" class="btn delicious-btn">See All Recipes</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Top Catagory Area -->
+            <div class="col-12 col-lg-6">
+                <div class="single-top-catagory">
+                    <img src="{{ url_for('static', filename='img/bg-img/bg3.jpg') }}" alt="">
+                    <!-- Content -->
+                    <div class="top-cta-content">
+                        <h3>Chinese Noodles</h3>
+                        <h6>Simple &amp; Delicious</h6>
+                        <a href="{{ url_for('views.recipes') }}" class="btn delicious-btn">See All Recipes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Top Catagory Area End ##### -->
+
+<!-- ##### Best Receipe Area Start ##### -->
+<section class="best-receipe-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>The Best Recipes</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r1.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Sushi Easy Recipe</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r2.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Homemade Burger</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r3.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Vegan Smoothie</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r4.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Calabasa Soup</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r5.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Homemade Breakfast</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Best Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{{ url_for('static', filename='img/bg-img/r6.jpg') }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Healthy Fruit Dessert</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Best Receipe Area End ##### -->
+<!-- ##### CTA Area Start ##### -->
+<section class="cta-area bg-img bg-overlay" style="background-image: url('{{ url_for('static', filename='img/bg-img/bg4.jpg') }}');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <!-- Cta Content -->
+                <div class="cta-content text-center">
+                    <h2>Gluten Free Recipes</h2>
+                    <p>Discover a variety of delicious gluten-free recipes that are easy to make and full of flavor. Perfect for those with gluten sensitivities or anyone looking for healthy meal options.</p>
+                    <!-- <a href="#" class="btn delicious-btn">Discover all the recipes</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- ##### Small Receipe Area Start ##### -->
+<section class="small-receipe-area section-padding-80-0">
+    <div class="container">
+        <div class="row">
+            <!-- Small Recipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr1.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Homemade Italian Pasta</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr2.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Baked Bread</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr3.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Scallops on Salt</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr4.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Fruits on Plate</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr5.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Macaroons</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr6.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Chocolate Tart</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr7.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Berry Dessert</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr8.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Zucchini Grilled on Pepper</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <div class="receipe-thumb">
+                        <img src="{{ url_for('static', filename='img/bg-img/sr9.jpg') }}" alt="">
+                    </div>
+                    <div class="receipe-content">
+                        <span>January 04, 2018</span>
+                        <a href="{{ url_for('views.recipes') }}">
+                            <h5>Chicken Salad</h5>
+                        </a>
+                        <div class="ratings">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <p>2 Comments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Small Receipe Area End ##### -->
+
+
+ <!-- ##### Quote Subscribe Area Start ##### -->
+<section class="quote-subscribe-adds">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+        <div class="col-12 col-lg-4">
+            <div class="quote-area text-center">
+                <span>"</span>
+                <h4>Nothing is better than going home to family and eating good food and relaxing</h4>
+                <p>John Smith</p>
+                <div class="date-comments d-flex justify-content-between">
+                    <div class="date">January 04, 2018</div>
+                    <div class="comments">2 Comments</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Quote Subscribe Area End ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="{{ url_for('static', filename='js/jquery/jquery-2.2.4.min.js') }}"></script>
+<!-- Popper js -->
+<script src="{{ url_for('static', filename='js/bootstrap/popper.min.js') }}"></script>
+<!-- Bootstrap js -->
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<!-- All Plugins js -->
+<script src="{{ url_for('static', filename='js/plugins/plugins.js') }}"></script>
+<!-- Active js -->
+<script src="{{ url_for('static', filename='js/active.js') }}"></script>
+</body>
+</html>

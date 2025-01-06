@@ -1,0 +1,214 @@
+/* dashboard.css */
+
+/* Basic Layout */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-image: url('{{ url_for('static', filename='images/macaron.jpg') }}');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.sidebar .profile-btn {
+  margin-bottom: 20px;
+}
+
+.sidebar .btn {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar .btn:hover {
+  background-color: #4cae4c;
+}
+
+.sidebar .menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar .menu li {
+  margin: 20px 0;
+}
+
+.sidebar .menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.sidebar .menu a:hover {
+  color: #5cb85c;
+}
+
+.logout-btn {
+  margin-top: auto;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  border-radius: 10px;
+  margin: 20px; /* Space around the main content */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.00); /* Subtle shadow */
+  text-align: center;
+}
+
+/* Heading styles */
+h1 {
+  font-size: 36px;
+  color: #ffffff;
+}
+
+p {
+  font-size: 18px;
+  color: #000000;
+}
+
+/* Weekly Meal Plan Section */
+.meal-plan-box {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white for content box */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-height: 400px; /* Fixed height for consistent layout */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+.meal-plan {
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-day {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.meal-details {
+  margin-top: 10px;
+}
+
+.meal-box {
+  padding: 10px;
+  background-color: #f0f8ff;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.meal-box p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+/* Add Meal Button Styling */
+.add-meal-btn {
+  margin-top: 20px;
+}
+
+.add-meal-btn .btn {
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.add-meal-btn .btn:hover {
+  background-color: #218838;
+}
+
+/* Calendar Styling */
+.calendar {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  width: 14.28%; /* 7 columns */
+}
+
+.calendar td p {
+  margin: 5px 0;
+}
+
+.calendar th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Box around each meal */
+.meal-box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.meal-box h4 {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.meal-box p {
+  color: #555;
+  font-size: 0.9em;
+}
+
+.meal-box .meal-name {
+  font-weight: bold;
+}

@@ -1,0 +1,96 @@
+
+<!-- Styles for Chat Button and Box -->
+<style>
+    #chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    #chat-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    #chat-box {
+        width: 300px;
+        height: 400px;
+        background-color: white;
+        border: 1px solid #ccc;
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        /* display: none; */
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+    }
+    
+    #chat-box.hidden {
+        display: none;
+    }
+    
+    #messages {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+    
+    #user-input {
+        width: calc(100% - 60px);
+        margin-right: 10px;
+    }
+    
+    #chat-box button {
+        width: 50px;
+        height: 30px;
+    }
+</style>
+    
+
+
+<div id="chat-container">
+    <button id="chat-button" onclick="toggleChat()">💬</button>
+    <div id="chat-box" class="hidden">
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+
+<script>
+function toggleChat() {
+    const chatBox = document.getElementById('chat-box');
+    if (chatBox.classList.contains('hidden')) {
+        chatBox.classList.remove('hidden');
+        chatBox.style.display = 'flex'; // Make sure the chat box displays as a flexbox
+    } else {
+        chatBox.classList.add('hidden');
+        chatBox.style.display = 'none';
+    }
+}
+
+
+function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    fetch('/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: userInput})
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageBox = document.getElementById('messages');
+        messageBox.innerHTML += `<p><strong>User:</strong> ${userInput}</p>`;
+        messageBox.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+        document.getElementById('user-input').value = '';
+    });
+}
+</script>

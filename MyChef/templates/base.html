@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Discover and share amazing recipes with My Chef.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Title Block -->
+    <title>{% block title %}Amader Boi mela{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/core-img/favicon.ico') }}">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Optional Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header class="header-area">
+        <div class="top-header-area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-between">
+                    <div class="col-12 col-sm-6">
+                        <div class="breaking-news">
+                            <div id="breakingNewsTicker" class="ticker">
+                                <ul>
+                                    <li><a href="#">Hello World!</a></li>
+                                    <li><a href="#">Welcome to My Chef.</a></li>
+                                    <li><a href="#">Filled with deliciousness!</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="delicious-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                        <!-- Logo -->
+                        <a class="nav-brand" href="{{ url_for('views.home') }}">
+                            <span>AMADER BOI MELA</span>
+                        </a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Main Menu -->
+                        <div class="classy-menu">
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Navigation Links -->
+                            <div class="classynav d-flex align-items-center">
+                                <!-- All Recipes Button -->
+                                <a href="{{ url_for('views.recipes') }}" class="btn btn-primary mx-2">All Recipes</a>
+                                <!-- Add Recipe Button -->
+                                <a href="{{ url_for('views.add_recipe') }}" class="btn btn-primary mx-2">Add Recipe</a>
+                                
+                                <!-- Conditional Auth Buttons -->
+                                {% if current_user.is_authenticated %}
+                                <!-- Dashboard Button -->
+                                <a href="{{ url_for('views.dashboard') }}" class="btn btn-success mx-2">Dashboard</a>
+                                {% else %}
+                                <!-- Login/Signup Button -->
+                                <a href="{{ url_for('views.login') }}" class="btn btn-auth mx-2">Login/Signup</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Main Content Area Start ##### -->
+    <main class="main-content py-4">
+        {% block content %}
+        <!-- Child template content goes here -->
+        {% endblock %}
+    </main>
+    <!-- ##### Main Content Area End ##### -->
+
+    <!-- Footer Area -->
+    <footer class="footer-area text-center py-3">
+        <p>&copy; 2025 AMADER BOI MELA. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Optional JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

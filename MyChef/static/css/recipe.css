@@ -1,0 +1,94 @@
+/* General styles for the recipe page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* Recipe container for better layout */
+.recipe-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2980b9;
+    margin-bottom: 20px;
+}
+
+/* Styling for the recipe image */
+.recipe-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.recipe-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Recipe details section */
+.recipe-details p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.detail {
+    font-weight: bold;
+    color: #2980b9;
+}
+
+/* Review form and button styles */
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form select,
+form textarea,
+form button {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+/* Styling for the ingredients and instructions sections */
+ul, ol {
+    padding-left: 20px;
+}
+
+ul li, ol li {
+    margin-bottom: 10px;
+}
+
+/* Reviews section */
+h2 {
+    color: #3498db;
+}
