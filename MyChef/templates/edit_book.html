@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="edit-book">
+        <h1>Edit Book Details</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="title">Title:</label>
+            <input type="text" name="title" value="{{ book.title }}" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" rows="4" required>{{ book.description }}</textarea>
+
+            <label for="price">Price:</label>
+            <input type="number" name="price" value="{{ book.price }}" step="0.01" required>
+
+            <label for="genre">Genre:</label>
+            <input type="text" name="genre" value="{{ book.genre }}" required>
+
+            <label for="image">Upload New Image (optional):</label>
+            <input type="file" name="image">
+
+            <button type="submit">Update Book</button>
+        </form>
+    </div>
+{% endblock %}

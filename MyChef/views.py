@@ -178,7 +178,38 @@ def book_details(book_id):
             return redirect(url_for('views.book_details', book_id=book.id))  # Redirect to the same page to show the new review
 
     return render_template('book_details.html', book=book, reviews=reviews, average_rating=average_rating)
+########### EDIT BOOK ##############
+@views.route('/book/<int:book_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_book(book_id):
+    book = Book.query.get_or_404(book_id)
 
+    # Ensure the logged-in user is the seller of the book
+    if book.seller_id != current_user.id:
+        flash("You can only edit your own books.", "danger")
+        return redirect(url_for('book.book_details', book_id=book.id))
+
+    if request.method == 'POST':
+        book.title = request.form['title']
+        book.description = request.form['description']
+        book.price = request.form['price']
+        book.genre = request.form['genre']
+        
+        # Handle file upload for book image
+        if 'image' in request.files:
+            image = request.files['image']
+            if image and allowed_file(image.filename):
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                book.image = filename
+        
+        db.session.commit()
+        flash('Book details updated successfully!', 'success')
+        return redirect(url_for('book.book_details', book_id=book.id))
+
+    return render_template('edit_book.html', book=book)
+
+########### DELETE BOOK ##############
 # from flask import Blueprint, render_template, session
 # from flask_login import login_required, current_user
 # from .models import FavoriteRecipe, MealPlan, Tag

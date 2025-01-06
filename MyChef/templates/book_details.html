@@ -13,6 +13,11 @@
             <img src="{{ url_for('static', filename='book_images/default.png') }}" alt="Book Image">
         {% endif %}
         
+        <!-- Edit Button for Seller -->
+        {% if book.seller_id == current_user.id %}
+            <a href="{{ url_for('views.edit_book', book_id=book.id) }}" class="btn btn-warning">Edit Book</a>
+        {% endif %}
+        
         <h2>Reviews</h2>
         {% if reviews %}
             <div class="reviews">
