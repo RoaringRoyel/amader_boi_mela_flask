@@ -4,7 +4,7 @@ from .models import Cart, CartItem, Favorite, Sale, BookExchangeRequest
 import os
 views = Blueprint('views', __name__)
 from .models import User,db
-from .models import Book
+from .models import Book,Review, Cart, CartItem, Favorite, Sale, BookExchangeRequest
 
 @views.route('/')
 def index():
@@ -145,6 +145,39 @@ def post_new_book():
         return redirect(url_for('views.seller_dashboard'))  # Redirect to the seller dashboard
 
     return render_template('post_new_book.html', user=current_user)  # Render the page with the form
+######## BOOK REVIEW PART #############
+@views.route('/book/<int:book_id>', methods=['GET', 'POST'])
+@login_required
+def book_details(book_id):
+    # Fetch the book by ID
+    book = Book.query.get_or_404(book_id)
+
+    # Fetch reviews for the book
+    reviews = Review.query.filter_by(book_id=book.id).all()
+
+    # Calculate the average rating
+    average_rating = None
+    if reviews:
+        average_rating = sum([review.rating for review in reviews]) / len(reviews)
+
+    # Handle the review submission form
+    if request.method == 'POST':
+        rating = request.form.get('rating')
+        comment = request.form.get('comment')
+
+        if rating and comment:
+            new_review = Review(
+                rating=int(rating),
+                comment=comment,
+                book_id=book.id,
+                user_id=current_user.id
+            )
+            db.session.add(new_review)
+            db.session.commit()
+            flash('Review added successfully!', category='success')
+            return redirect(url_for('views.book_details', book_id=book.id))  # Redirect to the same page to show the new review
+
+    return render_template('book_details.html', book=book, reviews=reviews, average_rating=average_rating)
 
 # from flask import Blueprint, render_template, session
 # from flask_login import login_required, current_user

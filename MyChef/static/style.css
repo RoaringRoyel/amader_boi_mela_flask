@@ -1534,3 +1534,49 @@ a {
 a:hover {
   text-decoration: underline;
 } */
+.book-details {
+  padding: 20px;
+}
+
+.book-details img {
+  max-width: 300px;
+  height: auto;
+}
+
+.reviews {
+  margin-top: 20px;
+}
+
+.review {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.review hr {
+  margin-top: 10px;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+form {
+  margin-top: 20px;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}

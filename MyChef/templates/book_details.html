@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="book-details">
+        <h1>{{ book.title }} by {{ book.author }}</h1>
+        <p><strong>Description:</strong> {{ book.description }}</p>
+        <p><strong>Price:</strong> ${{ book.price }}</p>
+        <p><strong>Genre:</strong> {{ book.genre }}</p>
+        
+        {% if book.image %}
+            <img src="{{ url_for('static', filename='book_images/' + book.image) }}" alt="Book Image">
+        {% else %}
+            <img src="{{ url_for('static', filename='book_images/default.png') }}" alt="Book Image">
+        {% endif %}
+        
+        <h2>Reviews</h2>
+        {% if reviews %}
+            <div class="reviews">
+                {% for review in reviews %}
+                    <div class="review">
+                        <p><strong>{{ review.user.first_name }}:</strong></p>
+                        <p>Rating: {{ review.rating }} / 5</p>
+                        <p>{{ review.comment }}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+
+        {% if average_rating %}
+            <p><strong>Average Rating:</strong> {{ average_rating }} / 5</p>
+        {% endif %}
+
+        <h3>Leave a Review</h3>
+        <form method="POST">
+            <label for="rating">Rating (1-5):</label>
+            <input type="number" name="rating" min="1" max="5" required>
+
+            <label for="comment">Comment:</label>
+            <textarea name="comment" rows="4" required></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+{% endblock %}
