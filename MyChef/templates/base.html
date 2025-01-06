@@ -22,31 +22,13 @@
 
 <body>
     <header class="header-area">
-        <div class="top-header-area">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-between">
-                    <div class="col-12 col-sm-6">
-                        <div class="breaking-news">
-                            <div id="breakingNewsTicker" class="ticker">
-                                <ul>
-                                    <li><a href="#">Hello World!</a></li>
-                                    <li><a href="#">Welcome to My Chef.</a></li>
-                                    <li><a href="#">Filled with deliciousness!</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="delicious-main-menu">
             <div class="classy-nav-container breakpoint-off">
                 <div class="container">
                     <nav class="classy-navbar justify-content-between" id="deliciousNav">
 
                         <!-- Logo -->
-                        <a class="nav-brand" href="{{ url_for('views.home') }}">
+                        <a class="nav-brand" href="{{ url_for('views.index') }}">
                             <span>AMADER BOI MELA</span>
                         </a>
 
@@ -63,18 +45,25 @@
 
                             <!-- Navigation Links -->
                             <div class="classynav d-flex align-items-center">
-                                <!-- All Recipes Button -->
-                                <a href="{{ url_for('views.recipes') }}" class="btn btn-primary mx-2">All Recipes</a>
-                                <!-- Add Recipe Button -->
-                                <a href="{{ url_for('views.add_recipe') }}" class="btn btn-primary mx-2">Add Recipe</a>
-                                
                                 <!-- Conditional Auth Buttons -->
                                 {% if current_user.is_authenticated %}
-                                <!-- Dashboard Button -->
-                                <a href="{{ url_for('views.dashboard') }}" class="btn btn-success mx-2">Dashboard</a>
+                                    <!-- Display Buyer/Seller Role -->
+                                    <span class="btn btn-secondary mx-2">
+                                        {% if current_user.role == 'buyer' %}
+                                        <a href="{{ url_for('views.buyer_dashboard') }}" class="btn btn-success mx-2">Buyer Dashboard</a>
+                                        {% elif current_user.role == 'seller' %}
+                                        <a href="{{ url_for('views.post_new_book') }}" class="btn btn-primary mx-2">Add New Book</a>  <!-- Add New Book button for sellers -->
+                                        <a href="{{ url_for('views.seller_dashboard') }}" class="btn btn-success mx-2">Seller Dashboard</a>
+
+                                        {% else %}
+                                            Unknown Role
+                                        {% endif %}
+                                    </span>
+                                    <!-- Dashboard Button -->
+                                    
                                 {% else %}
-                                <!-- Login/Signup Button -->
-                                <a href="{{ url_for('views.login') }}" class="btn btn-auth mx-2">Login/Signup</a>
+                                    <!-- Login/Signup Button -->
+                                    <a href="{{ url_for('views.login') }}" class="btn btn-auth mx-2">Login/Signup</a>
                                 {% endif %}
                             </div>
                         </div>

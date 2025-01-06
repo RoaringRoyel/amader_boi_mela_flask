@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Post a New Book | Amader Boi Mela{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Post a New Book</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="form-group">
+            <label for="title">Book Title</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <!-- Author -->
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" required>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <!-- Genre -->
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <input type="text" id="genre" name="genre" required>
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" step="0.01" id="price" name="price" required>
+        </div>
+
+        <!-- Book Image -->
+        <div class="form-group">
+            <label for="image">Book Image</label>
+            <input type="file" id="image" name="image">
+        </div>
+
+        <!-- Hidden Input for Book Condition (Always new) -->
+        <input type="hidden" name="is_used" value="false">
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success">Post Book</button>
+    </form>
+</div>
+{% endblock %}

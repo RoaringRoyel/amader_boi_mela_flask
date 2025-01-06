@@ -8,6 +8,12 @@ from .models import Book
 
 @views.route('/')
 def index():
+    if current_user.is_authenticated:
+        # Redirect to appropriate dashboard based on role
+        if current_user.role == 'buyer':
+            return redirect(url_for('views.buyer_dashboard'))
+        elif current_user.role == 'seller':
+            return redirect(url_for('views.seller_dashboard'))
     return render_template('login_signup.html')  # Or whatever the index page should render
 
 @views.route('/buyer_dashboard')
@@ -91,6 +97,54 @@ def seller_dashboard():
                            books=books,
                            sales=sales,
                            pending_requests=pending_requests)
+######## NEW BOOK PART #############
+@views.route('/post_new_book', methods=['GET', 'POST'])
+@login_required
+def post_new_book():
+    if current_user.role != 'seller':
+        return redirect(url_for('views.index'))  # Redirect to home if the user is not a seller
+
+    if request.method == 'POST':
+        # Get form data
+        title = request.form.get('title')
+        author = request.form.get('author')
+        description = request.form.get('description')
+        genre = request.form.get('genre')
+        price = float(request.form.get('price'))
+        is_used = False  # Force the book to be new (no used books allowed)
+        image = request.files.get('image')  # Optional image for the book
+
+        # Create a new book object
+        new_book = Book(
+            title=title,
+            author=author,
+            description=description,
+            genre=genre,
+            price=price,
+            seller_id=current_user.id,
+            is_used=is_used  # Set book as new
+        )
+
+        if image:
+            # Save the image to the static folder
+            book_images_folder = os.path.join('MyChef', 'static', 'book_images')
+            if not os.path.exists(book_images_folder):
+                os.makedirs(book_images_folder)
+
+            image_path = os.path.join(book_images_folder, image.filename)
+            image.save(image_path)
+
+            # Set the image file name in the book object
+            new_book.image = image.filename
+
+        # Add the new book to the database
+        db.session.add(new_book)
+        db.session.commit()
+
+        flash('New book posted successfully!', category='success')
+        return redirect(url_for('views.seller_dashboard'))  # Redirect to the seller dashboard
+
+    return render_template('post_new_book.html', user=current_user)  # Render the page with the form
 
 # from flask import Blueprint, render_template, session
 # from flask_login import login_required, current_user
