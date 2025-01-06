@@ -22,6 +22,10 @@ def login():
                     flash('Logged in successfully!', category='success')
                     login_user(user, remember=True)
                     return redirect(url_for('views.buyer_dashboard'))
+                elif user.role == 'seller':
+                    flash('Logged in successfully!', category='success')
+                    login_user(user, remember=True)
+                    return redirect(url_for('views.seller_dashboard'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:

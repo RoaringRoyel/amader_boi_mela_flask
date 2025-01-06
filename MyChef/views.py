@@ -4,6 +4,12 @@ from .models import Cart, CartItem, Favorite, Sale, BookExchangeRequest
 import os
 views = Blueprint('views', __name__)
 from .models import User,db
+from .models import Book
+
+@views.route('/')
+def index():
+    return render_template('login_signup.html')  # Or whatever the index page should render
+
 @views.route('/buyer_dashboard')
 @login_required
 def buyer_dashboard():
@@ -61,6 +67,30 @@ def edit_profile():
         return redirect(url_for('views.buyer_dashboard'))  # Redirect back to the dashboard
 
     return render_template('edit_profile.html', user=current_user)
+
+
+# Route for Seller Dashboard
+@views.route('/seller_dashboard')
+@login_required
+def seller_dashboard():
+    if current_user.role != 'seller':
+        return redirect(url_for('views.index'))  # Redirect to the home page if the user is not a seller
+
+    # Fetch books listed by the seller
+    books = Book.query.filter_by(seller_id=current_user.id).all()
+
+    # Fetch sales made by the seller
+    sales = Sale.query.filter_by(seller_id=current_user.id).all()
+
+    # Fetch pending book exchange requests for the seller
+    pending_requests = BookExchangeRequest.query.filter_by(user_id=current_user.id, status='Pending').all()
+
+    # Render the seller_dashboard template with the relevant data
+    return render_template('seller_dashboard.html',
+                           user=current_user,
+                           books=books,
+                           sales=sales,
+                           pending_requests=pending_requests)
 
 # from flask import Blueprint, render_template, session
 # from flask_login import login_required, current_user
