@@ -49,7 +49,10 @@
                             <div class="classynav d-flex align-items-center">
                                 <!-- In the header area or navigation bar -->
                                 <a href="{{ url_for('views.all_books') }}" class="btn btn-primary mx-2">All Books</a>
+                                <!-- Add Blog Button -->
+                                <a href="{{ url_for('views.all_blogs') }}" class="btn btn-primary mx-2">Blogs</a>
 
+                                <!-- Conditional Auth Buttons -->
                                 <!-- Conditional Auth Buttons -->
                                 {% if current_user.is_authenticated %}
                                     <!-- Display Buyer/Seller Role -->

@@ -85,6 +85,7 @@ class Blog(db.Model):
     # Relationships
     author = db.relationship('User', back_populates='blogs')
 
+
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

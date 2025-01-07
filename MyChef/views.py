@@ -4,7 +4,7 @@ from .models import Cart, CartItem, Favorite, Sale, BookExchangeRequest
 import os
 views = Blueprint('views', __name__)
 from .models import User,db
-from .models import Book,Review, Cart, CartItem, Favorite, Sale, BookExchangeRequest
+from .models import Book,Review, Cart, CartItem, Favorite, Sale, BookExchangeRequest,Blog
 
 @views.route('/')
 def index():
@@ -224,200 +224,6 @@ def all_books():
 
     return render_template('all_books.html', books=books)
 
-
-
-###### FAV PART ###################
-
-########### DELETE BOOK ##############
-# from flask import Blueprint, render_template, session
-# from flask_login import login_required, current_user
-# from .models import FavoriteRecipe, MealPlan, Tag
-# from datetime import datetime, timedelta
-# import datetime
-# from flask import Blueprint, render_template, request, flash, redirect, url_for
-# from flask_login import login_required, current_user
-# from . import db
-# from .models import MealPlan, Recipe, Ingredient, Instruction
-# from werkzeug.utils import secure_filename
-
-# views = Blueprint('views', __name__)
-
-# @views.route('/')
-# def home():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('views.dashboard'))
-#     return render_template('index.html')
-
-
-# @views.route('/login', methods=['GET'])
-# def login():
-#     return render_template('login_signup.html')
-
-
-# from datetime import datetime, timedelta, date  # Ensure you import timedelta here
-
-
-# @views.route('/dashboard')
-# @login_required
-# def user_dashboard():
-#     today = datetime.today()
-#     start_of_week = today - timedelta(days=today.weekday())
-    
-#     meal_plans = MealPlan.query.filter_by(user_id=current_user.id).all()
-
-#     weekly_meals = [
-#         {
-#             'day': start_of_week + timedelta(days=day),
-#             'meals': [meal for meal in meal_plans if meal.date == (start_of_week + timedelta(days=day)).date()]
-#         }
-#         for day in range(7)
-#     ]
-
-#     return render_template('dashboard.html', weekly_meals=weekly_meals, start_of_week=start_of_week)
-
-
-
-# import os
-
-# UPLOAD_FOLDER = os.path.join(os.getcwd(), 'MyChef', 'static', 'uploads')
-# if not os.path.exists(UPLOAD_FOLDER):
-#     os.makedirs(UPLOAD_FOLDER)
-
-# @views.route('/add_recipe', methods=['GET', 'POST'])
-# @login_required
-# def add_recipe():
-#     if request.method == 'GET':
-#         return render_template('add_recipe.html', user=current_user)
-#     if request.method == 'POST':
-#         name = request.form.get('name')
-#         description = request.form.get('description')
-#         cuisine = request.form.get('cuisine')
-#         image = request.files.get('image')  
-
-#         if not name or not cuisine:
-#             flash('Name and Cuisine are required!', category='error')
-#             return render_template('add_recipe.html', user=current_user)
-
-#         if image:
-#             print("I AM HERE")
-#             filename = secure_filename(image.filename)
-#             image_path = os.path.join(UPLOAD_FOLDER, filename)  # Use the full path
-#             image.save(image_path)  # Save image in the uploads folder
-#             relative_image_path = f'uploads/{filename}'
-#         else:
-#             relative_image_path = None
-
-#         new_recipe = Recipe(
-#             name=name,
-#             description=description,
-#             cuisine=cuisine,
-#             image=relative_image_path,  # Save relative path to the database
-#             rating=0,  # Initialize with 0 rating
-#             user_id=current_user.id # Assign the recipe to the logged-in user
-#         )
-#         db.session.add(new_recipe)
-#         db.session.commit()
-
-#         ingredients = request.form.get('ingredients')  # Make sure you collect all ingredients as a comma-separated string
-#         for ingredient in ingredients.split(','):
-#             new_ingredient = Ingredient(
-#                 recipe_id=new_recipe.id,
-#                 ingredient=ingredient.strip()
-#             )
-#             db.session.add(new_ingredient)
-
-#         instructions = request.form.get('instructions')  # Make sure you collect all instructions
-#         for step_number, instruction in enumerate(instructions.split('\n'), start=1):
-#             new_instruction = Instruction(
-#                 recipe_id=new_recipe.id,
-#                 step_number=step_number,
-#                 instruction=instruction.strip()
-#             )
-#             db.session.add(new_instruction)
-
-#         db.session.commit()
-
-#         flash('Recipe added successfully!', category='success')
-#         return redirect(url_for('views.dashboard'))
-
-#     return render_template('add_recipe.html', user=current_user)
-
-
-# ######## ALL RECIPES ##############
-# from sqlalchemy import func
-
-# from flask import request, render_template
-# from . import db
-# from .models import Recipe
-# import logging
-
-# @views.route('/recipes', methods=['GET', 'POST'])
-# def recipes():
-#     filters = []
-#     name_query = request.args.get('name')  
-#     cuisine_query = request.args.get('cuisine')  
-
-#     logging.debug(f"Searching for Name: {name_query}, Cuisine: {cuisine_query}")
-
-#     if name_query:
-#         filters.append(Recipe.name.ilike(f'%{name_query}%'))
-
-#     if cuisine_query:
-#         filters.append(Recipe.cuisine.ilike(f'%{cuisine_query}%'))
-
-#     logging.debug(f"Final filters: {filters}")
-
-#     filtered_recipes = Recipe.query.filter(*filters).all()
-
-#     logging.debug(f"SQL Query: {str(Recipe.query.filter(*filters))}")
-
-#     return render_template('recipes.html', recipes=filtered_recipes)
-
-
-# @views.route('/recipe_details/<int:recipe_id>', methods=['GET'])
-# def recipe_details(recipe_id):
-#     recipe = Recipe.query.get_or_404(recipe_id)
-#     average_rating = (
-#         db.session.query(func.avg(Review.rating))
-#         .filter(Review.recipe_id == recipe_id)
-#         .scalar()
-#     )
-    
-#     average_rating = round(average_rating, 1) if average_rating else "No ratings yet"
-    
-#     return render_template('recipe_details.html', recipe=recipe, average_rating=average_rating)
-
-
-# @views.route('/my_recipes', methods=['GET'])
-# @login_required
-# def my_recipes():
-#     # Fetch the recipes added by the current user, including reviews and average ratings
-#     recipes = db.session.query(
-#         Recipe,
-#         func.coalesce(func.avg(Review.rating), 0).label('average_rating'),
-#         func.count(Review.id).label('review_count')
-#     ).outerjoin(Review).filter(Recipe.user_id == current_user.id).group_by(Recipe.id).all()
-
-#     return render_template('my_recipes.html', recipes=recipes)
-
-
-
-# @views.route('/delete_recipe/<int:recipe_id>', methods=['POST'])
-# @login_required
-# def delete_recipe(recipe_id):
-#     recipe = Recipe.query.filter_by(id=recipe_id, user_id=current_user.id).first()
-#     if recipe:
-#         db.session.delete(recipe)
-#         db.session.commit()
-#         flash('Recipe deleted successfully!', category='success')
-#     else:
-#         flash('Recipe not found or you are not authorized to delete it.', category='error')
-#     return redirect(url_for('views.my_recipes'))
-
-# ####################################
-
-
-
 # ######## Handle Chatbot ################
 def generate_response(user_message):
     if "hello" in user_message.lower():
@@ -443,3 +249,31 @@ def chat():
     response = generate_response(user_message)
     return jsonify({'response': response})
 
+########## BLOG PART ################
+
+@views.route('/create_blog', methods=['GET', 'POST'])
+@login_required
+def create_blog():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        # Create a new Blog post
+        new_blog = Blog(
+            title=title, 
+            content=content, 
+            author_id=current_user.id
+        )
+        db.session.add(new_blog)
+        db.session.commit()
+        print("New blog post added successfully!")
+        blogs = Blog.query.all()
+        return render_template('blogs.html', blogs=blogs)
+
+    return render_template('create_blog.html')
+
+@views.route('/blogs')
+def all_blogs():
+    # Get all blogs
+    blogs = Blog.query.all()
+    return render_template('blogs.html', blogs=blogs)

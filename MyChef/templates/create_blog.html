@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Create Blog - Amader Boi Mela{% endblock %}
+
+{% block content %}
+{% include 'chatbot.html' %}
+
+<!-- Create Blog Form -->
+<div class="container mt-5">
+    <h2 class="mb-4">Create a New Blog Post</h2>
+
+    <!-- Success Message -->
+    {% if success_message %}
+        <div class="alert alert-success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('views.create_blog') }}">
+        <!-- Blog Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Blog Title</label>
+            <input type="text" class="form-control" id="title" name="title" required placeholder="Enter the blog title">
+        </div>
+
+        <!-- Blog Content -->
+        <div class="mb-3">
+            <label for="content" class="form-label">Blog Content</label>
+            <textarea class="form-control" id="content" name="content" rows="6" required placeholder="Write your blog content here..."></textarea>
+        </div>
+
+        <!-- Book Selection (Optional) -->
+        <div class="mb-3">
+            <label for="book_id" class="form-label">Choose a Book (Optional)</label>
+            <select class="form-select" id="book_id" name="book_id">
+                <option value="" selected>No book reference</option>
+                {% for book in books %}
+                    <option value="{{ book.id }}">{{ book.title }} by {{ book.author }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Publish Blog</button>
+        <a href="{{ url_for('views.all_blogs') }}" class="btn btn-secondary ms-2">Back to Blogs</a>
+    </form>
+</div>
+
+{% endblock %}

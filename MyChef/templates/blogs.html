@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}All Blogs - Amader Boi Mela{% endblock %}
+
+{% block content %}
+{% include 'chatbot.html' %}
+
+<!-- Create Blog Post Button (Visible only when logged in) -->
+{% if current_user.is_authenticated %}
+    <div class="container mt-4">
+        <a href="{{ url_for('views.create_blog') }}" class="btn btn-primary">Create Blog Post</a>
+    </div>
+{% endif %}
+
+<!-- Search Bar -->
+<div class="container mt-4">
+    <h2>All Blogs</h2>
+    <form method="GET" action="{{ url_for('views.all_blogs') }}">
+        <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="Search by title or content" name="search_query" value="{{ request.args.get('search_query', '') }}">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <!-- Blogs Display -->
+    <div class="row">
+        {% for blog in blogs %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Blog Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ blog.title }}</h5>
+                        <p class="card-text">{{ blog.content[:100] }}...</p>  <!-- Short content preview -->
+                        <p class="text-muted"><small>Posted by {{ blog.author.first_name }} on {{ blog.date_created.strftime('%b %d, %Y') }}</small></p>
+                        </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No blogs available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
