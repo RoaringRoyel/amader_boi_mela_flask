@@ -209,20 +209,21 @@ def edit_book(book_id):
 
     return render_template('edit_book.html', book=book)
 ######## ALL BOOKS ##########################
-from flask import render_template, request
-from .models import Book  # Assuming you have a Book model for your database
-
 @views.route('/all_books', methods=['GET'])
 def all_books():
-    search_query = request.args.get('search', '')  # Get the search term from the request
-    
+    search_query = request.args.get('search_query', '')  # Get the search term from the request
+
     # Fetch books from the database, filtered by search query
     if search_query:
-        books = Book.query.filter(Book.title.ilike(f'%{search_query}%')).all()
+        books = Book.query.filter(
+            (Book.title.ilike(f'%{search_query}%')) |  # Filter books based on title
+            (Book.description.ilike(f'%{search_query}%'))  # Or description
+        ).all()
     else:
         books = Book.query.all()  # If no search query, fetch all books
-    
+
     return render_template('all_books.html', books=books)
+
 
 
 ###### FAV PART ###################

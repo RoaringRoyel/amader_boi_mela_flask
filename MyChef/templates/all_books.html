@@ -3,24 +3,35 @@
 {% block title %}All Books - Amader Boi Mela{% endblock %}
 
 {% block content %}
-    <div class="container mt-4">
-        <h2>All Books</h2>
-        <div class="row">
-            {% for book in books %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ url_for('static', filename='book_images/' + book.image) }}" class="card-img-top" alt="{{ book.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ book.title }}</h5>
-                            <p class="card-text">{{ book.description[:100] }}...</p>  <!-- Short description -->
-                            <p class="card-text">Price: ${{ book.price }}</p>
-                            <a href="{{ url_for('views.book_details', book_id=book.id) }}" class="btn btn-primary">View Details</a>
-                        </div>
+{% include 'chatbot.html' %}
+
+<!-- Search Bar -->
+<div class="container mt-4">
+    <h2>All Books</h2>
+    <form method="GET" action="{{ url_for('views.all_books') }}">
+        <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="Search by title or description" name="search_query" value="{{ request.args.get('search_query', '') }}">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <!-- Books Display -->
+    <div class="row">
+        {% for book in books %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='book_images/' + book.image) }}" class="card-img-top" alt="{{ book.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">{{ book.description[:100] }}...</p>  <!-- Short description -->
+                        <p class="card-text">Price: ${{ book.price }}</p>
+                        <a href="{{ url_for('views.book_details', book_id=book.id) }}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
-            {% else %}
-                <p>No books available.</p>
-            {% endfor %}
-        </div>
+            </div>
+        {% else %}
+            <p>No books available.</p>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}
