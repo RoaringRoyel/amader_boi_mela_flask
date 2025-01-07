@@ -208,6 +208,15 @@ def edit_book(book_id):
         return redirect(url_for('book.book_details', book_id=book.id))
 
     return render_template('edit_book.html', book=book)
+######## ALL BOOKS ##########################
+@views.route('/all_books')
+def all_books():
+    # Fetch all books from the database
+    books = Book.query.all()
+    
+    return render_template('all_books.html', books=books)
+
+###### FAV PART ###################
 
 ########### DELETE BOOK ##############
 # from flask import Blueprint, render_template, session

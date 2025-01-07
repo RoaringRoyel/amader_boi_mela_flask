@@ -18,6 +18,8 @@
 
     <!-- Optional Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
@@ -45,6 +47,9 @@
 
                             <!-- Navigation Links -->
                             <div class="classynav d-flex align-items-center">
+                                <!-- In the header area or navigation bar -->
+                                <a href="{{ url_for('views.all_books') }}" class="btn btn-primary mx-2">All Books</a>
+
                                 <!-- Conditional Auth Buttons -->
                                 {% if current_user.is_authenticated %}
                                     <!-- Display Buyer/Seller Role -->
