@@ -32,7 +32,10 @@
                         <h5 class="card-title">{{ blog.title }}</h5>
                         <p class="card-text">{{ blog.content[:100] }}...</p>  <!-- Short content preview -->
                         <p class="text-muted"><small>Posted by {{ blog.author.first_name }} on {{ blog.date_created.strftime('%b %d, %Y') }}</small></p>
-                        </div>
+                        <!-- View Details Button -->
+                        <a href="{{ url_for('views.blog_details', blog_id=blog.id) }}" class="btn btn-info">View Details</a>
+
+                    </div>
                 </div>
             </div>
         {% else %}

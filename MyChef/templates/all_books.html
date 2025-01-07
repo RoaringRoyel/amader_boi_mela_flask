@@ -25,6 +25,19 @@
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description[:100] }}...</p>  <!-- Short description -->
                         <p class="card-text">Price: ${{ book.price }}</p>
+                        
+                        {% if current_user.is_authenticated and current_user.role == 'buyer' %}
+                            <!-- Action buttons: Favourite and Add to Cart -->
+                            <form action="{{ url_for('views.add_to_favorites', book_id=book.id) }}" method="POST">
+                                <button type="submit" class="btn btn-outline-danger">Add to Favorites</button>
+                            </form>
+
+                            <form action="{{ url_for('views.add_to_cart', book_id=book.id) }}" method="POST">
+                                <button type="submit" class="btn btn-outline-success">Add to Cart</button>
+                            </form>
+                        {% endif %}
+
+
                         <a href="{{ url_for('views.book_details', book_id=book.id) }}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>

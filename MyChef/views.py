@@ -9,18 +9,17 @@ from .models import Book,Review, Cart, CartItem, Favorite, Sale, BookExchangeReq
 @views.route('/')
 def index():
     if current_user.is_authenticated:
-        # Redirect to appropriate dashboard based on role
         if current_user.role == 'buyer':
             return redirect(url_for('views.buyer_dashboard'))
         elif current_user.role == 'seller':
             return redirect(url_for('views.seller_dashboard'))
-    return render_template('login_signup.html')  # Or whatever the index page should render
+    return render_template('login_signup.html')  
 
 @views.route('/buyer_dashboard')
 @login_required
 def buyer_dashboard():
     if current_user.role != 'buyer':
-        return redirect(url_for('views.index'))  # Ensure it redirects to an existing route
+        return redirect(url_for('views.index'))  
 
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     cart_items = CartItem.query.filter_by(cart_id=cart.id).all() if cart else []
@@ -38,60 +37,48 @@ def buyer_dashboard():
                            purchased_books=purchased_books,
                            pending_requests=pending_requests)
 
-# Route for editing profile
 @views.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     if request.method == 'POST':
-        # Get the form data
         first_name = request.form.get('first_name')
         email = request.form.get('email')
         profile_picture = request.files.get('profile_picture')
 
-        # Update the user record
         user = User.query.get(current_user.id)
         user.first_name = first_name
         user.email = email
 
         if profile_picture:
-            # Create the profile_pics folder if it doesn't exist
             profile_pics_folder = os.path.join('MyChef','static', 'profile_pics')
             if not os.path.exists(profile_pics_folder):
-                os.makedirs(profile_pics_folder)  # Create the directory if it doesn't exist
-            
-            # Save the uploaded profile picture
+                os.makedirs(profile_pics_folder)
+
             profile_picture_path = os.path.join(profile_pics_folder, profile_picture.filename)
             profile_picture.save(profile_picture_path)
 
-            # Update the user's profile picture field in the database
             user.profile_picture = profile_picture.filename
 
-        # Commit changes to the database
         db.session.commit()
 
         flash('Profile updated successfully!', category='success')
-        return redirect(url_for('views.buyer_dashboard'))  # Redirect back to the dashboard
+        return redirect(url_for('views.buyer_dashboard'))  
 
     return render_template('edit_profile.html', user=current_user)
 
 
-# Route for Seller Dashboard
 @views.route('/seller_dashboard')
 @login_required
 def seller_dashboard():
     if current_user.role != 'seller':
-        return redirect(url_for('views.index'))  # Redirect to the home page if the user is not a seller
+        return redirect(url_for('views.index'))  
 
-    # Fetch books listed by the seller
     books = Book.query.filter_by(seller_id=current_user.id).all()
 
-    # Fetch sales made by the seller
     sales = Sale.query.filter_by(seller_id=current_user.id).all()
 
-    # Fetch pending book exchange requests for the seller
     pending_requests = BookExchangeRequest.query.filter_by(user_id=current_user.id, status='Pending').all()
 
-    # Render the seller_dashboard template with the relevant data
     return render_template('seller_dashboard.html',
                            user=current_user,
                            books=books,
@@ -102,19 +89,17 @@ def seller_dashboard():
 @login_required
 def post_new_book():
     if current_user.role != 'seller':
-        return redirect(url_for('views.index'))  # Redirect to home if the user is not a seller
+        return redirect(url_for('views.index'))  
 
     if request.method == 'POST':
-        # Get form data
         title = request.form.get('title')
         author = request.form.get('author')
         description = request.form.get('description')
         genre = request.form.get('genre')
         price = float(request.form.get('price'))
-        is_used = False  # Force the book to be new (no used books allowed)
-        image = request.files.get('image')  # Optional image for the book
+        is_used = False  
+        image = request.files.get('image')  
 
-        # Create a new book object
         new_book = Book(
             title=title,
             author=author,
@@ -122,11 +107,9 @@ def post_new_book():
             genre=genre,
             price=price,
             seller_id=current_user.id,
-            is_used=is_used  # Set book as new
         )
 
         if image:
-            # Save the image to the static folder
             book_images_folder = os.path.join('MyChef', 'static', 'book_images')
             if not os.path.exists(book_images_folder):
                 os.makedirs(book_images_folder)
@@ -134,33 +117,27 @@ def post_new_book():
             image_path = os.path.join(book_images_folder, image.filename)
             image.save(image_path)
 
-            # Set the image file name in the book object
             new_book.image = image.filename
 
-        # Add the new book to the database
         db.session.add(new_book)
         db.session.commit()
 
         flash('New book posted successfully!', category='success')
-        return redirect(url_for('views.seller_dashboard'))  # Redirect to the seller dashboard
+        return redirect(url_for('views.seller_dashboard'))  
 
-    return render_template('post_new_book.html', user=current_user)  # Render the page with the form
+    return render_template('post_new_book.html', user=current_user)  
 ######## BOOK REVIEW PART #############
 @views.route('/book/<int:book_id>', methods=['GET', 'POST'])
 @login_required
 def book_details(book_id):
-    # Fetch the book by ID
     book = Book.query.get_or_404(book_id)
 
-    # Fetch reviews for the book
     reviews = Review.query.filter_by(book_id=book.id).all()
 
-    # Calculate the average rating
     average_rating = None
     if reviews:
         average_rating = sum([review.rating for review in reviews]) / len(reviews)
 
-    # Handle the review submission form
     if request.method == 'POST':
         rating = request.form.get('rating')
         comment = request.form.get('comment')
@@ -184,7 +161,6 @@ def book_details(book_id):
 def edit_book(book_id):
     book = Book.query.get_or_404(book_id)
 
-    # Ensure the logged-in user is the seller of the book
     if book.seller_id != current_user.id:
         flash("You can only edit your own books.", "danger")
         return redirect(url_for('book.book_details', book_id=book.id))
@@ -195,7 +171,6 @@ def edit_book(book_id):
         book.price = request.form['price']
         book.genre = request.form['genre']
         
-        # Handle file upload for book image
         if 'image' in request.files:
             image = request.files['image']
             if image and allowed_file(image.filename):
@@ -211,16 +186,15 @@ def edit_book(book_id):
 ######## ALL BOOKS ##########################
 @views.route('/all_books', methods=['GET'])
 def all_books():
-    search_query = request.args.get('search_query', '')  # Get the search term from the request
+    search_query = request.args.get('search_query', '') 
 
-    # Fetch books from the database, filtered by search query
     if search_query:
         books = Book.query.filter(
-            (Book.title.ilike(f'%{search_query}%')) |  # Filter books based on title
-            (Book.description.ilike(f'%{search_query}%'))  # Or description
+            (Book.title.ilike(f'%{search_query}%')) |  
+            (Book.description.ilike(f'%{search_query}%'))  
         ).all()
     else:
-        books = Book.query.all()  # If no search query, fetch all books
+        books = Book.query.all()  
 
     return render_template('all_books.html', books=books)
 
@@ -258,7 +232,6 @@ def create_blog():
         title = request.form['title']
         content = request.form['content']
 
-        # Create a new Blog post
         new_blog = Blog(
             title=title, 
             content=content, 
@@ -274,6 +247,57 @@ def create_blog():
 
 @views.route('/blogs')
 def all_blogs():
-    # Get all blogs
     blogs = Blog.query.all()
     return render_template('blogs.html', blogs=blogs)
+
+
+@views.route('/blog/<int:blog_id>')
+def blog_details(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+    return render_template('blog_details.html', blog=blog)
+
+########### CART
+@views.route('/add_to_cart/<int:book_id>', methods=['POST'])
+@login_required
+def add_to_cart(book_id):
+    if current_user.role != 'buyer':  
+        return redirect(url_for('views.all_books'))  
+
+    book = Book.query.get_or_404(book_id)
+
+    cart = Cart.query.filter_by(user_id=current_user.id, is_active=True).first()  # Ensure `is_active` is checked
+    if not cart:
+        cart = Cart(user_id=current_user.id)
+        db.session.add(cart)
+        db.session.commit()
+
+    existing_cart_item = CartItem.query.filter_by(cart_id=cart.id, book_id=book.id).first()
+    if existing_cart_item:
+        existing_cart_item.quantity += 1
+        db.session.commit()
+        flash('This book quantity was updated in your cart!', 'info')
+    else:
+        new_cart_item = CartItem(cart_id=cart.id, book_id=book.id, quantity=1)
+        db.session.add(new_cart_item)
+        db.session.commit()
+        flash('Book added to cart!', 'success')
+
+    return redirect(url_for('views.all_books'))
+
+
+
+@views.route('/add_to_favorites/<int:book_id>', methods=['POST'])
+@login_required
+def add_to_favorites(book_id):
+    book = Book.query.get_or_404(book_id)
+
+    existing_favorite = Favorite.query.filter_by(user_id=current_user.id, book_id=book.id).first()
+    if existing_favorite:
+        flash('This book is already in your favorites!', 'info')
+    else:
+        new_favorite = Favorite(user_id=current_user.id, book_id=book.id)
+        db.session.add(new_favorite)
+        db.session.commit()
+        flash('Book added to favorites!', 'success')
+
+    return redirect(url_for('views.all_books'))
