@@ -199,13 +199,39 @@ def all_books():
     return render_template('all_books.html', books=books)
 
 # ######## Handle Chatbot ################
+# ######## Handle Chatbot ################
 def generate_response(user_message):
     if "hello" in user_message.lower():
         return "Hi there! How can I help you today?"
     elif "recipe" in user_message.lower():
         return "I can help you with recipes. What type of cuisine are you interested in?"
+    elif "book" in user_message.lower():
+        return "I love books! What genre are you interested in?"
+    elif "novel" in user_message.lower():
+        return "Novels are amazing! Do you prefer fiction or non-fiction?"
+    elif "author" in user_message.lower():
+        return "I can recommend books by famous authors. Do you have any favorite authors?"
+    elif "recommendation" in user_message.lower():
+        return "Sure! What type of books are you interested in? Fiction, mystery, fantasy?"
+    elif "reading" in user_message.lower():
+        return "Reading is a great hobby! Are you looking for suggestions on what to read next?"
+    elif "book club" in user_message.lower():
+        return "Book clubs are a great way to discover new books. Are you part of one, or would you like to start one?"
+    elif "library" in user_message.lower():
+        return "Libraries are full of amazing books! Do you have a favorite library or bookstore?"
+    elif "fiction" in user_message.lower():
+        return "Fiction books can take you to different worlds. Are you into fantasy, romance, or mystery fiction?"
+    elif "non-fiction" in user_message.lower():
+        return "Non-fiction books are great for learning. Are you looking for biographies, self-help, or history books?"
+    elif "classic" in user_message.lower():
+        return "Classics never go out of style! Do you have a favorite classic book?"
+    elif "best-seller" in user_message.lower():
+        return "Best-sellers are always popular for a reason! Would you like a recommendation from the best-seller list?"
+    elif "bookstore" in user_message.lower():
+        return "Bookstores are a haven for book lovers. Do you prefer online or physical bookstores?"
     else:
         return "I'm not sure I understand. Can you please rephrase?"
+
 
 @views.route('/chatbot', methods=['GET'])
 def chatbot():
