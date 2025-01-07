@@ -209,12 +209,21 @@ def edit_book(book_id):
 
     return render_template('edit_book.html', book=book)
 ######## ALL BOOKS ##########################
-@views.route('/all_books')
+from flask import render_template, request
+from .models import Book  # Assuming you have a Book model for your database
+
+@views.route('/all_books', methods=['GET'])
 def all_books():
-    # Fetch all books from the database
-    books = Book.query.all()
+    search_query = request.args.get('search', '')  # Get the search term from the request
+    
+    # Fetch books from the database, filtered by search query
+    if search_query:
+        books = Book.query.filter(Book.title.ilike(f'%{search_query}%')).all()
+    else:
+        books = Book.query.all()  # If no search query, fetch all books
     
     return render_template('all_books.html', books=books)
+
 
 ###### FAV PART ###################
 
@@ -409,170 +418,27 @@ def all_books():
 
 
 # ######## Handle Chatbot ################
-# def generate_response(user_message):
-#     if "hello" in user_message.lower():
-#         return "Hi there! How can I help you today?"
-#     elif "recipe" in user_message.lower():
-#         return "I can help you with recipes. What type of cuisine are you interested in?"
-#     else:
-#         return "I'm not sure I understand. Can you please rephrase?"
+def generate_response(user_message):
+    if "hello" in user_message.lower():
+        return "Hi there! How can I help you today?"
+    elif "recipe" in user_message.lower():
+        return "I can help you with recipes. What type of cuisine are you interested in?"
+    else:
+        return "I'm not sure I understand. Can you please rephrase?"
 
-# @views.route('/chatbot', methods=['GET'])
-# def chatbot():
-#     return render_template('chatbot.html')
+@views.route('/chatbot', methods=['GET'])
+def chatbot():
+    return render_template('chatbot.html')
 
-# @views.route('/temp', methods=['GET'])
-# def temp():
-#     return render_template('temp.html')
+@views.route('/temp', methods=['GET'])
+def temp():
+    return render_template('temp.html')
 
-# from flask import jsonify
+from flask import jsonify
 
-# @views.route('/chat', methods=['POST'])
-# def chat():
-#     user_message = request.json.get('message')
-#     response = generate_response(user_message)
-#     return jsonify({'response': response})
+@views.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get('message')
+    response = generate_response(user_message)
+    return jsonify({'response': response})
 
-
-# @views.route('/dashboard')
-# @login_required
-# def dashboard():
-#     meal_plans = MealPlan.query.filter_by(user_id=current_user.id).all()
-    
-#     today = datetime.today()
-#     start_of_week = today - datetime.timedelta(days=today.weekday()) 
-#     end_of_week = start_of_week + datetime.timedelta(days=6)  
-    
-#     weekly_meals = [meal for meal in meal_plans if start_of_week <= meal.date <= end_of_week]
-
-#     return render_template('dashboard.html', meals=weekly_meals, start_of_week=start_of_week)
-
-
-# from flask import  request
-
-# # views.py
-# from flask import render_template, request, redirect, url_for
-# from .models import MealPlan, Recipe
-# from flask_login import login_required, current_user
-
-# @views.route('/add_meal', methods=['GET', 'POST'])
-# @login_required
-# def add_meal():
-#     if request.method == 'POST':
-#         name = request.form['name']
-#         date_string = request.form['date'] 
-#         recipe_id = request.form['recipe_id']
-        
-#         date_object = datetime.strptime(date_string, '%Y-%m-%d').date()
-
-#         meal_plan = MealPlan(
-#             name=name,
-#             date=date_object,
-#             user_id=current_user.id,  
-#             recipe_id=recipe_id
-#         )
-
-#         db.session.add(meal_plan)
-#         db.session.commit()
-
-#         flash('Meal added successfully!', category='success')
-#         return redirect(url_for('views.user_dashboard'))  # Redirect to user dashboard
-
-#     recipes = Recipe.query.all()
-#     return render_template('add_meal.html', recipes=recipes)
-
-
-
-# # Route for removing a meal
-# @views.route('/remove_meal/<int:meal_id>/<date>', methods=['POST'])
-# def remove_meal(meal_id, date):
-#     meal = MealPlan.query.get(meal_id)  
-#     if meal:
-#         db.session.delete(meal)
-#         db.session.commit()
-#         return jsonify({'success': True})
-#     return jsonify({'success': False})
-
-# # Route for replacing a meal
-# @views.route('/replace_meal/<int:meal_id>/<date>', methods=['POST'])
-# def replace_meal(meal_id, date):
-#     data = request.get_json()
-#     new_recipe_name = data.get('newRecipeName')
-
-#     new_recipe = Recipe.query.filter_by(name=new_recipe_name).first()
-
-#     if new_recipe:
-#         meal = MealPlan.query.get(meal_id)  
-#         if meal:
-#             meal.recipe = new_recipe
-#             db.session.commit()
-#             return jsonify({'success': True})
-#     return jsonify({'success': False})
-
-# from .models import Review
-# ########## Review Part ##########
-# @views.route('/recipe_details/<int:recipe_id>/add_review', methods=['POST'])
-# @login_required
-# def add_review(recipe_id):
-#     rating = request.form.get('rating')
-#     comment = request.form.get('comment')
-#     review = Review(
-#         recipe_id=recipe_id,
-#         user_id=current_user.id,
-#         rating=rating,
-#         comment=comment
-#     )
-#     db.session.add(review)
-#     db.session.commit()
-#     return redirect(url_for('views.recipe_details', recipe_id=recipe_id))
-# ##################################
-
-
-# ######views for fav recipe#######
-
-# @views.route('/favorite/<int:recipe_id>', methods=['POST'])
-# @login_required
-# def favorite_recipe(recipe_id):
-#     recipe = Recipe.query.get(recipe_id)
-#     if not recipe:
-#         flash("Recipe not found!", category='error')
-#         return redirect(url_for('views.recipes'))  
-    
-#     existing_favorite = FavoriteRecipe.query.filter_by(user_id=current_user.id, recipe_id=recipe_id).first()
-    
-#     if existing_favorite:
-#         flash("Recipe is already in your favorites!", category='info')
-#     else:
-#         favorite = FavoriteRecipe(user_id=current_user.id, recipe_id=recipe_id)
-#         db.session.add(favorite)
-#         db.session.commit()
-#         flash("Recipe added to favorites!", category='success')
-    
-#     return redirect(request.referrer)  
-
-
-
-
-# @views.route('/favorites')
-# @login_required
-# def favorites():
-#     user_id = current_user.id
-    
-#     favorited_recipes = FavoriteRecipe.query.filter_by(user_id=user_id).join(Recipe).all()
-#     return render_template('favorites.html', recipes=[fav.recipe for fav in favorited_recipes])
-
-
-
-# @views.route('/unfavorite/<int:recipe_id>', methods=['POST'])
-# @login_required
-# def unfavorite_recipe(recipe_id):
-#     favorite = FavoriteRecipe.query.filter_by(user_id=current_user.id, recipe_id=recipe_id).first()
-    
-#     if favorite:
-#         db.session.delete(favorite)
-#         db.session.commit()
-#         flash('Recipe removed from favorites.', 'success')
-#     else:
-#         flash('Recipe not found in your favorites.', 'error')
-    
-#     return redirect(url_for('views.favorites'))
